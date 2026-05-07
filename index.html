@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>হারিস মাহমুদ শরিক | লেখক</title>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Serif+Bengali:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" defer></script>
+  <style>
+    :root {
+      --bg: #0f0e0c;
+      --bg2: #161410;
+      --card: #1c1a16;
+      --border: #2e2a22;
+      --gold: #c9a84c;
+      --gold-light: #e8c96a;
+      --cream: #f0e6ce;
+      --muted: #7a6e5a;
+      --text: #e8dcc8;
+      --accent: #8b3a2a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(15, 14, 12, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--gold); font-size: 1.4rem; }
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      z-index: 99;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block; padding: 0.6rem 0;
+      color: var(--muted); text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 100px 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: 
+        radial-gradient(ellipse 60% 60% at 70% 50%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 80% at 20% 30%, rgba(139,58,42,0.08) 0%, transparent 70%);
+    }
+    /* Decorative lines */
+    .hero-lines {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 40%;
+      pointer-events: none; opacity: 0.06;
+    }
+    .hero-content {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 0.3rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+      font-family: 'Hind Siliguri', sans-serif;
+    }
+    .hero-name {
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+    }
+    .hero-name span { color: var(--gold); }
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+    .hero-bio {
+      font-size: 0.95rem;
+      color: var(--text);
+      opacity: 0.8;
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+    .hero-socials { display: flex; gap: 1rem; }
+    .social-btn {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.25s;
+    }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.07); }
+
+    /* Hero image / ornament */
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+    }
+    .hero-frame {
+      width: 280px; height: 340px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      background: var(--card);
+    }
+    .hero-frame::before {
+      content: '';
+      position: absolute; inset: 8px;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 2px;
+      z-index: 2;
+    }
+    .hero-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem;
+      color: var(--muted);
+    }
+    .hero-placeholder i { font-size: 3rem; color: rgba(201,168,76,0.3); }
+    .hero-placeholder p { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .hero-corner {
+      position: absolute;
+      width: 60px; height: 60px;
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: 0.5;
+    }
+    .hero-corner.tl { top: -8px; left: -8px; border-width: 2px 0 0 2px; }
+    .hero-corner.br { bottom: -8px; right: -8px; border-width: 0 2px 2px 0; }
+
+    /* Stats */
+    .hero-stats {
+      display: flex; gap: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--gold);
+    }
+    .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1; max-width: 60px;
+      height: 1px; background: var(--gold); opacity: 0.4;
+    }
+    .section-title {
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .section-desc { color: var(--muted); font-size: 0.95rem; margin-bottom: 3rem; }
+
+    /* ── BLOG ── */
+    #blog { background: var(--bg2); }
+    .blog-tabs { display: flex; gap: 0; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+    .blog-tab {
+      padding: 0.6rem 1.4rem;
+      background: none; border: none;
+      color: var(--muted);
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .blog-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .blog-tab:hover { color: var(--text); }
+
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .blog-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+    .blog-card:hover::after { transform: scaleX(1); }
+    .blog-cat {
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.7rem;
+    }
+    .blog-card-title {
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 1.05rem; font-weight: 600;
+      color: var(--cream);
+      line-height: 1.5;
+      margin-bottom: 0.6rem;
+    }
+    .blog-card-excerpt { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+    .blog-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--muted); }
+    .blog-reads { display: flex; align-items: center; gap: 0.3rem; }
+
+    .view-all {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin-top: 2.5rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+      padding-bottom: 2px;
+      transition: gap 0.2s;
+    }
+    .view-all:hover { gap: 0.8rem; }
+
+    /* ── ABOUT / BIO ── */
+    #about { background: var(--bg); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: start; }
+    .timeline { position: relative; padding-left: 1.5rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 6px; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+    .timeline-item { position: relative; margin-bottom: 2rem; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -1.5rem; top: 6px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold); border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--gold);
+    }
+    .timeline-date { font-size: 0.75rem; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 0.25rem; }
+    .timeline-title {
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 0.95rem; font-weight: 600;
+      color: var(--cream); margin-bottom: 0.2rem;
+    }
+    .timeline-sub { font-size: 0.82rem; color: var(--muted); }
+
+    .about-text p { margin-bottom: 1.2rem; font-size: 0.95rem; line-height: 1.9; color: var(--text); opacity: 0.85; }
+    .about-text strong { color: var(--gold); font-weight: 600; }
+
+    .quote-block {
+      border-left: 3px solid var(--gold);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      background: rgba(201,168,76,0.04);
+      border-radius: 0 4px 4px 0;
+    }
+    .quote-block p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 1rem;
+      color: var(--cream) !important; opacity: 1 !important;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg2); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label { font-size: 0.8rem; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; }
+    .form-input {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.7rem 1rem;
+      color: var(--text);
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--gold); }
+    textarea.form-input { resize: vertical; min-height: 130px; }
+    .form-submit {
+      background: var(--gold);
+      color: var(--bg);
+      border: none; border-radius: 3px;
+      padding: 0.8rem 2rem;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 0.95rem; font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+      align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .contact-info h3 {
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 1.2rem; margin-bottom: 1rem; color: var(--cream);
+    }
+    .contact-info p { font-size: 0.9rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.7rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.8rem;
+      color: var(--muted); text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-link:hover { color: var(--gold); }
+    .contact-link i { width: 18px; color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.7s ease both; }
+    .d1 { animation-delay: 0.1s; }
+    .d2 { animation-delay: 0.25s; }
+    .d3 { animation-delay: 0.4s; }
+    .d4 { animation-delay: 0.55s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .hero-content { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .hero-stats { gap: 1.2rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      nav { padding: 0 1rem; }
+      section { padding: 3rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">হারিস মাহমুদ শরিক</a>
+  <ul class="nav-links">
+    <li><a href="#blog">ব্লগ</a></li>
+    <li><a href="#about">পরিচয়</a></li>
+    <li><a href="#contact">যোগাযোগ</a></li>
+  </ul>
+  <button class="hamburger" id="hamburgerBtn">☰</button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#blog" onclick="closeMobile()">ব্লগ</a>
+  <a href="#about" onclick="closeMobile()">পরিচয়</a>
+  <a href="#contact" onclick="closeMobile()">যোগাযোগ</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-tag fade-up d1">✦ লেখক · চিন্তক</div>
+      <h1 class="hero-name fade-up d2">হারিস মাহমুদ <span>শরিক</span></h1>
+      <p class="hero-subtitle fade-up d2">Haris Mahmod Sharik</p>
+      <p class="hero-bio fade-up d3">
+        বই পড়া, লেখালেখি এবং ভাবনার জগতে বিচরণ করি। 
+        সাহিত্য, জীবনদর্শন ও বইয়ের রিভিউ নিয়ে লিখি। 
+        বিশ্বাস করি — একটি ভালো বই পারে একটি মানুষকে বদলে দিতে।
+      </p>
+      <div class="hero-socials fade-up d4">
+        <a href="https://harismahmod.wordpress.com" class="social-btn" target="_blank" title="WordPress Blog">
+          <i class="fab fa-wordpress"></i>
+        </a>
+        <a href="#" class="social-btn" title="Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="social-btn" title="YouTube">
+          <i class="fab fa-youtube"></i>
+        </a>
+      </div>
+      <div class="hero-stats fade-up d4">
+        <div class="stat"><span class="stat-num">৫০+</span><span class="stat-label">ব্লগ পোস্ট</span></div>
+        <div class="stat"><span class="stat-num">৩</span><span class="stat-label">বই রিভিউ সিরিজ</span></div>
+        <div class="stat"><span class="stat-num">∞</span><span class="stat-label">পড়া বই</span></div>
+      </div>
+    </div>
+    <div class="hero-visual fade-up d3">
+      <div style="position:relative;">
+        <div class="hero-corner tl"></div>
+        <div class="hero-corner br"></div>
+        <div class="hero-frame">
+          <div class="hero-placeholder">
+            <i class="fas fa-feather-alt"></i>
+            <p>আপনার ছবি</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="container">
+    <div class="section-label">সাম্প্রতিক লেখা</div>
+    <h2 class="section-title">ব্লগ</h2>
+    <p class="section-desc">বই, জীবন ও চিন্তার কথামালা</p>
+
+    <div class="blog-tabs">
+      <button class="blog-tab active" onclick="filterTab(this,'all')">সব</button>
+      <button class="blog-tab" onclick="filterTab(this,'review')">বই রিভিউ</button>
+      <button class="blog-tab" onclick="filterTab(this,'essay')">প্রবন্ধ</button>
+      <button class="blog-tab" onclick="filterTab(this,'travel')">ভ্রমণ</button>
+    </div>
+
+    <div class="blog-grid" id="blogGrid">
+
+      <a href="https://harismahmod.wordpress.com/2020/03/06/humayun-ahmed-hotel-graver-inn/" target="_blank" class="blog-card" data-cat="review">
+        <div class="blog-cat">বই রিভিউ</div>
+        <div class="blog-card-title">হুমায়ূন আহমেদ — হোটেল গ্রেভার ইন</div>
+        <div class="blog-card-excerpt">হুমায়ূন আহমেদ ঢাকা বিশ্ববিদ্যালয়ের পড়াশোনার পাঠ চুকিয়ে রওনা দিলেন আমেরিকায়, উদ্দেশ্য রসায়নে পিএইচডি সম্পন্ন করা...</div>
+        <div class="blog-meta">
+          <span>মার্চ ০৬, ২০২০</span>
+          <span class="blog-reads"><i class="fas fa-eye" style="font-size:0.7rem"></i> পড়তে ক্লিক করুন</span>
+        </div>
+      </a>
+
+      <a href="https://harismahmod.wordpress.com" target="_blank" class="blog-card" data-cat="essay">
+        <div class="blog-cat">প্রবন্ধ</div>
+        <div class="blog-card-title">লেখালেখির গল্প</div>
+        <div class="blog-card-excerpt">একটি ভালো লেখা শুধু পাঠকের মন ছোঁয় না, তা পাঠকের ভেতরের মানুষটাকেও নাড়িয়ে দেয়। কলম হাতে নেওয়ার সেই শুরুর গল্প...</div>
+        <div class="blog-meta">
+          <span>WordPress ব্লগ</span>
+          <span class="blog-reads"><i class="fas fa-arrow-right" style="font-size:0.7rem"></i> পড়ুন</span>
+        </div>
+      </a>
+
+      <a href="https://harismahmod.wordpress.com" target="_blank" class="blog-card" data-cat="review">
+        <div class="blog-cat">বই রিভিউ</div>
+        <div class="blog-card-title">আরও রিভিউ পড়ুন</div>
+        <div class="blog-card-excerpt">বিভিন্ন বইয়ের উপর লেখা রিভিউ ও বিশ্লেষণ। সাহিত্য থেকে শুরু করে বিজ্ঞান, দর্শন পর্যন্ত নানা বিষয়ে আলোচনা...</div>
+        <div class="blog-meta">
+          <span>WordPress ব্লগ</span>
+          <span class="blog-reads"><i class="fas fa-arrow-right" style="font-size:0.7rem"></i> সব দেখুন</span>
+        </div>
+      </a>
+
+    </div>
+
+    <a href="https://harismahmod.wordpress.com" target="_blank" class="view-all">
+      সব লেখা দেখুন <i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">আমার সম্পর্কে</div>
+    <h2 class="section-title">পরিচয়</h2>
+    <div class="about-grid">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">বর্তমান</div>
+          <div class="timeline-title">লেখক ও ব্লগার</div>
+          <div class="timeline-sub">harismahmod.wordpress.com</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">২০২০</div>
+          <div class="timeline-title">নিয়মিত বই রিভিউ শুরু</div>
+          <div class="timeline-sub">বাংলা সাহিত্য ও বিশ্বসাহিত্য</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">শুরু</div>
+          <div class="timeline-title">ব্লগিং যাত্রা শুরু</div>
+          <div class="timeline-sub">WordPress-এ লেখালেখি শুরু</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <p>
+          আমি <strong>হারিস মাহমুদ শরিক</strong>। পড়তে ভালোবাসি, ভাবতে ভালোবাসি এবং সেই ভাবনাগুলো লিখে রাখতে ভালোবাসি।
+        </p>
+        <div class="quote-block">
+          <p>"একটি বই পড়া মানে একটি নতুন জীবন যাপন করা।"</p>
+        </div>
+        <p>
+          বাংলা সাহিত্যের প্রতি আমার গভীর ভালোবাসা আছে। হুমায়ূন আহমেদ থেকে শুরু করে বিশ্বসাহিত্য পর্যন্ত, প্রতিটি ভালো বই আমার কাছে নতুন একটি দুনিয়া উন্মুক্ত করে দেয়।
+        </p>
+        <p>
+          আমার লেখার মূল বিষয় — <strong>বই রিভিউ</strong>, জীবনদর্শন এবং চারপাশের ভাবনাচিন্তা। 
+          বিশ্বাস করি লেখার মাধ্যমেই মানুষ তার সেরা চিন্তাগুলো পৌঁছে দিতে পারে।
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">যোগাযোগ করুন</div>
+    <h2 class="section-title">যোগাযোগ</h2>
+    <p class="section-desc">মন্তব্য, প্রশ্ন বা শুধু কথা বলতে চাইলে লিখুন</p>
+    <div class="contact-grid">
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">নাম</label>
+          <input type="text" class="form-input" placeholder="আপনার নাম" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ইমেইল</label>
+          <input type="email" class="form-input" placeholder="আপনার ইমেইল" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">বার্তা</label>
+          <textarea class="form-input" placeholder="আপনার বার্তা লিখুন..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">বার্তা পাঠান →</button>
+      </form>
+      <div class="contact-info">
+        <h3>সরাসরি যোগাযোগ</h3>
+        <p>আপনার মতামত আমার কাছে অত্যন্ত গুরুত্বপূর্ণ। বই নিয়ে আলোচনা করতে বা যেকোনো বিষয়ে কথা বলতে নিচের মাধ্যমে যোগাযোগ করুন।</p>
+        <div class="contact-links">
+          <a href="https://harismahmod.wordpress.com" target="_blank" class="contact-link">
+            <i class="fab fa-wordpress"></i> harismahmod.wordpress.com
+          </a>
+          <a href="#" class="contact-link">
+            <i class="fab fa-facebook-f"></i> Facebook
+          </a>
+          <a href="#" class="contact-link">
+            <i class="fas fa-envelope"></i> ইমেইল
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© ২০২৬ হারিস মাহমুদ শরিক · সর্বস্বত্ব সংরক্ষিত</p>
+  <p style="margin-top:0.4rem; font-size:0.75rem">ভালোবাসা দিয়ে তৈরি ✦</p>
+</footer>
+
+<script>
+  // Hamburger
+  const btn = document.getElementById('hamburgerBtn');
+  const menu = document.getElementById('mobileMenu');
+  btn.addEventListener('click', () => menu.classList.toggle('open'));
+  function closeMobile() { menu.classList.remove('open'); }
+
+  // Blog filter
+  function filterTab(el, cat) {
+    document.querySelectorAll('.blog-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.blog-card').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'block' : 'none';
+    });
+  }
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ পাঠানো হয়েছে!';
+    btn.style.background = '#4a9b6f';
+    setTimeout(() => { btn.textContent = 'বার্তা পাঠান →'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+
+  // Scroll fade-in for sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) { e.target.style.opacity=1; e.target.style.transform='translateY(0)'; } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.blog-card, .timeline-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
