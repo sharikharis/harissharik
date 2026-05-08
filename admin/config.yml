@@ -2,27 +2,22 @@ backend:
   name: github
   repo: sharikharis/harissharik
   branch: main
-  base_url: https://api.netlify.com
+  base_url: https://api.netlify.app
   auth_endpoint: /auth
   client_id: Ov23liXv9vsmrXLHV0d2
-  client_secret: 79eabb0f645443ba25bb4a9d7e7e2b96a2aff954
+
 media_folder: "images"
 public_folder: "images"
 
 collections:
-  - name: "content"
-    label: "Website Content"
-    files:
-      - label: "Blog Posts"
-        name: "posts"
-        file: "admin/data/posts.json"
-        fields:
-          - label: "Posts List"
-            name: "posts"
-            widget: "list"
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Category", name: "category", widget: "select", options: ["বই রিভিউ", "প্রবন্ধ", "গল্প"]}
-              - {label: "Date", name: "date", widget: "string", hint: "উদাহরণ: মে ০৮, ২০২৬"}
-              - {label: "Excerpt", name: "excerpt", widget: "text"}
-              - {label: "Full Content", name: "body", widget: "markdown"}
+  - name: "posts"
+    label: "Blog Posts"
+    folder: "admin/data" # যেখানে আপনার posts.json আছে
+    format: "json"
+    create: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "select", options: ["বই রিভিউ", "প্রবন্ধ", "গল্প"]}
+      - {label: "Date", name: "date", widget: "string", hint: "উদাহরণ: মে ০৮, ২০২৬"}
+      - {label: "Excerpt", name: "excerpt", widget: "text"}
+      - {label: "Full Content", name: "body", widget: "markdown"}
