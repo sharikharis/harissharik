@@ -14,8 +14,10 @@
         .back-btn { color: var(--gold); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 2rem; font-size: 1rem; border: 1px solid var(--gold); padding: 5px 15px; border-radius: 4px; transition: 0.3s;}
         .back-btn:hover { background: rgba(201,168,76,0.1); }
         h1 { font-family: 'Noto Serif Bengali', serif; color: var(--gold); margin-bottom: 10px; font-size: 2.2rem; line-height: 1.3;}
-        .meta { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; border-bottom: 1px solid #2e2a22; padding-bottom: 1rem; }
-        
+        .meta { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; border-bottom: 1px solid #2e2a22; padding-bottom: 1rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .view-count { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 0.9rem; }
+        .view-count svg { width: 15px; height: 15px; opacity: 0.7; }
+
         /* লেখার ভেতরের ডিজাইন */
         .content img { max-width: 100%; border-radius: 6px; margin: 1.5rem 0; }
         .content p { margin-bottom: 1.5rem; font-size: 1.05rem; opacity: 0.9;}
@@ -29,42 +31,78 @@
     
     <div id="postContainer">
         <h1 id="postTitle">লোড হচ্ছে...</h1>
-        <div id="postMeta" class="meta"></div>
+        <div id="postMeta" class="meta">
+            <span id="postInfo"></span>
+            <span class="view-count">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span id="viewCount">...</span> বার পড়া হয়েছে
+            </span>
+        </div>
         <div id="postContent" class="content"></div>
     </div>
 
     <div style="text-align: center; margin-top: 50px; margin-bottom: 80px; border-top: 1px solid #2e2a22; padding-top: 40px;">
-    <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 20px;">পড়া শেষ? ফিরে যেতে নিচের বাটনে ক্লিক করুন</p>
-    <a href="index.html#blog" class="back-btn" style="display: inline-flex;">← মূল তালিকায় ফিরে যান</a>
-</div>
+        <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 20px;">পড়া শেষ? ফিরে যেতে নিচের বাটনে ক্লিক করুন</p>
+        <a href="index.html#blog" class="back-btn" style="display: inline-flex;">← মূল তালিকায় ফিরে যান</a>
+    </div>
 
     <script>
+        // ── Supabase config ──
+        const SUPABASE_URL = 'https://zjtnnvczscycricjhxcb.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqdG5udmN6c2N5Y3JpY2poeGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMzI1NTksImV4cCI6MjA5MzgwODU1OX0.n3dCTxrgLYO2ykNmtL0qVJ3MzHaMwEyxvfQzRb75QYM';
+
+        async function trackView(slug) {
+            try {
+                // count বাড়ানো
+                await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_view`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ post_slug: slug })
+                });
+
+                // নতুন count দেখানো
+                const res = await fetch(
+                    `${SUPABASE_URL}/rest/v1/post_views?slug=eq.${slug}&select=views`,
+                    { headers: { 'apikey': SUPABASE_KEY } }
+                );
+                const data = await res.json();
+                if (data && data[0]) {
+                    document.getElementById('viewCount').textContent = data[0].views;
+                }
+            } catch (err) {
+                document.getElementById('viewCount').textContent = '—';
+            }
+        }
+
         async function loadFullPost() {
-            // URL থেকে কোন পোস্টে ক্লিক করা হয়েছে তা বের করা
             const urlParams = new URLSearchParams(window.location.search);
             const fileName = urlParams.get('file');
 
             if (!fileName) {
-                document.getElementById('postTitle').innerText = "কোনো পোস্ট পাওয়া যায়নি!";
+                document.getElementById('postTitle').innerText = "কোনো পোস্ট পাওয়া যায়নি!";
                 return;
             }
 
             try {
-                // গিটহাব থেকে ওই নির্দিষ্ট পোস্টের ডেটা আনা
                 const response = await fetch(`https://raw.githubusercontent.com/sharikharis/harissharik/main/admin/data/${fileName}`);
                 if (!response.ok) throw new Error("File not found");
                 
                 const post = await response.json();
 
-                // পেজে টাইটেল এবং তারিখ বসানো
                 document.title = post.title + " | হারিস মাহমুদ";
                 document.getElementById('postTitle').innerText = post.title;
-                document.getElementById('postMeta').innerText = `${post.category || 'ব্লগ'} • ${post.date || ''}`;
-                
-                // মার্কডাউন লেখাকে নরমাল ওয়েবসাইটে পড়ার মতো রূপান্তর করা
+                document.getElementById('postInfo').innerText = `${post.category || 'ব্লগ'} • ${post.date || ''}`;
                 document.getElementById('postContent').innerHTML = marked.parse(post.body || '');
+
+                // ফাইলনাম থেকে slug তৈরি (.json বাদ দিয়ে)
+                const slug = fileName.replace('.json', '');
+                trackView(slug);
+
             } catch (error) {
-                document.getElementById('postTitle').innerText = "পোস্ট লোড করতে সমস্যা হয়েছে।";
+                document.getElementById('postTitle').innerText = "পোস্ট লোড করতে সমস্যা হয়েছে।";
                 console.error(error);
             }
         }
