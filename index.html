@@ -679,7 +679,7 @@
                 const post = await postData.json();
 
                 dynamicPostsHTML += `
-                <a href="#" class="blog-card" style="border: 1px solid var(--gold);">
+    <a href="post.html?file=${file.name}" class="blog-card" style="border: 1px solid var(--gold);">
                     <div class="blog-cat">${post.category || 'ব্লগ'}</div>
                     <div class="blog-card-title">${post.title}</div>
                     <div class="blog-card-excerpt">${post.excerpt || ''}</div>
