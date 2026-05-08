@@ -12,7 +12,7 @@ collections:
     files:
       - label: "Blog Posts"
         name: "posts"
-        file: "data/posts.json"
+        file: "admin/data/posts.json"
         fields:
           - label: "Posts List"
             name: "posts"
