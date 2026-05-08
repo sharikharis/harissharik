@@ -65,7 +65,7 @@
 
                 // নতুন count দেখানো
                 const res = await fetch(
-                    `${SUPABASE_URL}/rest/v1/post_views?slug=eq.${slug}&select=views`,
+                    `${SUPABASE_URL}/rest/v1/post_views?slug=eq.${encodeURIComponent(slug)}&select=views`,
                     { headers: { 'apikey': SUPABASE_KEY } }
                 );
                 const data = await res.json();
@@ -98,7 +98,7 @@
                 document.getElementById('postContent').innerHTML = marked.parse(post.body || '');
 
                 // ফাইলনাম থেকে slug তৈরি (.json বাদ দিয়ে)
-                const slug = encodeURIComponent(fileName.replace('.json', ''));
+const slug = fileName.replace('.json', '');
 trackView(slug);
             } catch (error) {
                 document.getElementById('postTitle').innerText = "পোস্ট লোড করতে সমস্যা হয়েছে।";
