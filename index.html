@@ -656,5 +656,51 @@
     observer.observe(el);
   });
 </script>
+
+  <script>
+    // সিএমএস থেকে পোস্টগুলো টেনে আনার ফাংশন
+    async function loadCMSPosts() {
+        const grid = document.getElementById('blogGrid');
+        if (!grid) return;
+
+        try {
+            // আপনার গিটহাব রিপোজিটরি থেকে ফাইলের লিস্ট আনবে
+            const response = await fetch('https://api.github.com/repos/sharikharis/harissharik/contents/admin/data');
+            const files = await response.json();
+            
+            // শুধু .json (সিএমএস-এর) ফাইলগুলো ফিল্টার করবে
+            const posts = files.filter(file => file.name.endsWith('.json'));
+
+            let dynamicPostsHTML = '';
+
+            // প্রতিটি ফাইল পড়ে কার্ড তৈরি করবে
+            for (let file of posts) {
+                const postData = await fetch(file.download_url);
+                const post = await postData.json();
+
+                dynamicPostsHTML += `
+                <a href="#" class="blog-card" style="border: 1px solid var(--gold);">
+                    <div class="blog-cat">${post.category || 'ব্লগ'}</div>
+                    <div class="blog-card-title">${post.title}</div>
+                    <div class="blog-card-excerpt">${post.excerpt || ''}</div>
+                    <div class="blog-meta" style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; color: var(--muted); font-size: 0.85rem;">
+                        <span>${post.date || ''}</span>
+                    </div>
+                </a>
+                `;
+            }
+
+            // নতুন পোস্টগুলো গ্রিডের একদম শুরুতে (উপরে) বসিয়ে দেবে
+            grid.insertAdjacentHTML('afterbegin', dynamicPostsHTML);
+
+        } catch (error) {
+            console.log('পোস্ট লোড করতে সমস্যা হচ্ছে:', error);
+        }
+    }
+
+    // ফাংশনটি চালু করা
+    loadCMSPosts();
+</script>
+  
 </body>
 </html>
