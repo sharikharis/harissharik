@@ -1,3 +1,6 @@
+base_url: https://api.netlify.com
+auth_endpoint: /auth
+
 backend:
   name: github
   repo: sharikharis/harissharik
