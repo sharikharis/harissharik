@@ -5,7 +5,7 @@ backend:
   base_url: https://api.netlify.com
   auth_endpoint: /auth
   client_id: Ov23liXv9vsmrXLHV0d2
-
+  client_secret: 79eabb0f645443ba25bb4a9d7e7e2b96a2aff954
 media_folder: "images"
 public_folder: "images"
 
