@@ -1,0 +1,25 @@
+backend:
+  name: github
+  repo: sharikharis/harissharik
+  branch: main
+
+media_folder: "images"
+public_folder: "images"
+
+collections:
+  - name: "content"
+    label: "Website Content"
+    files:
+      - label: "Blog Posts"
+        name: "posts"
+        file: "data/posts.json"
+        fields:
+          - label: "Posts List"
+            name: "posts"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Category", name: "category", widget: "select", options: ["বই রিভিউ", "প্রবন্ধ", "গল্প"]}
+              - {label: "Date", name: "date", widget: "string", hint: "উদাহরণ: মার্চ ০৬, ২০২৬"}
+              - {label: "Excerpt (সংক্ষিপ্ত বিবরণ)", name: "excerpt", widget: "text"}
+              - {label: "Full Content", name: "body", widget: "markdown"}
