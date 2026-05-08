@@ -1,10 +1,10 @@
-base_url: https://api.netlify.com
-auth_endpoint: /auth
-
 backend:
   name: github
   repo: sharikharis/harissharik
   branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: /auth
+  client_id: Ov23liXv9vsmrXLHV0d2
 
 media_folder: "images"
 public_folder: "images"
@@ -23,6 +23,6 @@ collections:
             fields:
               - {label: "Title", name: "title", widget: "string"}
               - {label: "Category", name: "category", widget: "select", options: ["বই রিভিউ", "প্রবন্ধ", "গল্প"]}
-              - {label: "Date", name: "date", widget: "string", hint: "উদাহরণ: মার্চ ০৬, ২০২৬"}
-              - {label: "Excerpt (সংক্ষিপ্ত বিবরণ)", name: "excerpt", widget: "text"}
+              - {label: "Date", name: "date", widget: "string", hint: "উদাহরণ: মে ০৮, ২০২৬"}
+              - {label: "Excerpt", name: "excerpt", widget: "text"}
               - {label: "Full Content", name: "body", widget: "markdown"}
