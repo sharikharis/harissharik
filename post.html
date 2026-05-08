@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ব্লগ পোস্ট | হারিস মাহমুদ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Serif+Bengali:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <style>
+        :root {--bg: #0f0e0c; --card: #1c1a16; --gold: #c9a84c; --text: #e8dcc8; --muted: #7a6e5a;}
+        body { background: var(--bg); color: var(--text); font-family: 'Hind Siliguri', sans-serif; line-height: 1.8; padding: 2rem; max-width: 800px; margin: 0 auto; }
+        .back-btn { color: var(--gold); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 2rem; font-size: 1rem; border: 1px solid var(--gold); padding: 5px 15px; border-radius: 4px; transition: 0.3s;}
+        .back-btn:hover { background: rgba(201,168,76,0.1); }
+        h1 { font-family: 'Noto Serif Bengali', serif; color: var(--gold); margin-bottom: 10px; font-size: 2.2rem; line-height: 1.3;}
+        .meta { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; border-bottom: 1px solid #2e2a22; padding-bottom: 1rem; }
+        
+        /* লেখার ভেতরের ডিজাইন */
+        .content img { max-width: 100%; border-radius: 6px; margin: 1.5rem 0; }
+        .content p { margin-bottom: 1.5rem; font-size: 1.05rem; opacity: 0.9;}
+        .content h2, .content h3 { color: var(--text); margin-top: 2rem; margin-bottom: 1rem; font-family: 'Noto Serif Bengali', serif;}
+        .content blockquote { border-left: 4px solid var(--gold); padding-left: 1rem; font-style: italic; color: var(--muted); background: rgba(201,168,76,0.05); padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">← ফিরে যান</a>
+    
+    <div id="postContainer">
+        <h1 id="postTitle">লোড হচ্ছে...</h1>
+        <div id="postMeta" class="meta"></div>
+        <div id="postContent" class="content"></div>
+    </div>
+
+    <script>
+        async function loadFullPost() {
+            // URL থেকে কোন পোস্টে ক্লিক করা হয়েছে তা বের করা
+            const urlParams = new URLSearchParams(window.location.search);
+            const fileName = urlParams.get('file');
+
+            if (!fileName) {
+                document.getElementById('postTitle').innerText = "কোনো পোস্ট পাওয়া যায়নি!";
+                return;
+            }
+
+            try {
+                // গিটহাব থেকে ওই নির্দিষ্ট পোস্টের ডেটা আনা
+                const response = await fetch(`https://raw.githubusercontent.com/sharikharis/harissharik/main/admin/data/${fileName}`);
+                if (!response.ok) throw new Error("File not found");
+                
+                const post = await response.json();
+
+                // পেজে টাইটেল এবং তারিখ বসানো
+                document.title = post.title + " | হারিস মাহমুদ";
+                document.getElementById('postTitle').innerText = post.title;
+                document.getElementById('postMeta').innerText = `${post.category || 'ব্লগ'} • ${post.date || ''}`;
+                
+                // মার্কডাউন লেখাকে নরমাল ওয়েবসাইটে পড়ার মতো রূপান্তর করা
+                document.getElementById('postContent').innerHTML = marked.parse(post.body || '');
+            } catch (error) {
+                document.getElementById('postTitle').innerText = "পোস্ট লোড করতে সমস্যা হয়েছে।";
+                console.error(error);
+            }
+        }
+
+        loadFullPost();
+    </script>
+</body>
+</html>
