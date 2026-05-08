@@ -98,9 +98,8 @@
                 document.getElementById('postContent').innerHTML = marked.parse(post.body || '');
 
                 // ফাইলনাম থেকে slug তৈরি (.json বাদ দিয়ে)
-                const slug = fileName.replace('.json', '');
-                trackView(slug);
-
+                const slug = encodeURIComponent(fileName.replace('.json', ''));
+trackView(slug);
             } catch (error) {
                 document.getElementById('postTitle').innerText = "পোস্ট লোড করতে সমস্যা হয়েছে।";
                 console.error(error);
